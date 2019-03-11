@@ -1,0 +1,5 @@
+---
+first-user:
+  username: 'admin'
+  comment: 'admin user'
+  prompt: '\[\033[38;5;39m\][\t]\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]\[\033[38;5;2m\]\u\[$(tput sgr0)\]\[\033[38;5;13m\]@\H\[$(tput sgr0)\]\[\033[38;5;15m\]:\W> \[$(tput sgr0)\]'

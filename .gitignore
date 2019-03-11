@@ -1,0 +1,11 @@
+# IntelliJ
+.idea/
+out/
+*.iml
+
+# Packer
+packer.exe
+output-virtualbox-iso/
+packer_cache/
+*.ova
+*.iso

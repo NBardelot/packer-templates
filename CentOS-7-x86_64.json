@@ -1,0 +1,59 @@
+
+{
+  "_title_1": " Configuration file to build a basic CentOS 7 VM image ",
+  "_title_2": " Author  : Noël Bardelot                               ",
+
+  "_ssh": "You must use the same user/password that the one configured in anaconda-ks.cfg",
+
+  "builders": [{
+    "type": "virtualbox-iso",
+
+    "guest_os_type": "RedHat_64",
+    "iso_url": "http://ftp.pasteur.fr/mirrors/CentOS/7/isos/x86_64/CentOS-7-x86_64-NetInstall-1810.iso",
+    "iso_checksum": "19d94274ef856c4dfcacb2e7cfe4be73e442a71dd65cc3fb6e46db826040b56e",
+    "iso_checksum_type": "sha256",
+
+    "communicator": "ssh",
+    "ssh_username": "root",
+    "ssh_password": "root",
+    "ssh_wait_timeout": "20m",
+
+    "memory": 1024,
+    "cpus": 1,
+    "disk_size": 10240,
+
+    "boot_command": [
+      "<esc>",
+      "<wait>",
+      "linux inst.noninteractive inst.cmdline inst.keymap=fr inst.lang=fr_FR.UTF-8 inst.ks=hd:/dev/fd0:anaconda-ks.cfg",
+      "<enter>"
+    ],
+    "boot_wait": "5s",
+    "floppy_files": [
+      "anaconda-ks.cfg"
+    ],
+
+    "shutdown_command": "echo 'admin' | sudo -S shutdown -P now",
+    "shutdown_timeout": "2m",
+
+    "format": "ova"
+  }],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "yum update -y",
+        "yum install -y ansible"
+      ]
+    },
+    {
+      "type": "ansible-local",
+      "staging_directory": "/root/provisionning",
+      "playbook_dir": "provisionning-playbooks",
+      "playbook_files": [
+        "provisionning-playbooks/provisionning.yml"
+      ]
+    }
+  ]
+}

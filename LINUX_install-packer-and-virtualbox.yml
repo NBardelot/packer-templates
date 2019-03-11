@@ -1,0 +1,126 @@
+---
+# Install Packer on RHEL/CentOS 7
+# Author : Noël Bardelot
+
+- hosts: 127.0.0.1
+  become: true
+  vars:
+    packer_download_url: 'https://releases.hashicorp.com/packer/1.3.4/packer_1.3.4_linux_amd64.zip'
+    installation_dir: '/opt/packer'
+    installation_archive: 'packer_1.3.4_linux_amd64.zip'
+    virtualbox_repo_url: "http://download.virtualbox.org/virtualbox/rpm/el/$releasever/$basearch"
+    virtualbox_gpg_key_url: 'https://www.virtualbox.org/download/oracle_vbox.asc'
+  tasks:
+
+    - name: "We need unzip in order to unarchive Ansible"
+      package:
+        name: unzip
+        state: present
+
+    - name: "Group for packer"
+      group:
+        name: packer
+        state: present
+
+    - name: "User for packer"
+      user:
+        name: packer
+        comment: packer
+        group: packer
+        append: yes
+        groups:
+          - wheel
+
+    - name: "Create installation directory"
+      file:
+        path: "{{ installation_dir }}"
+        state: directory
+        owner: packer
+        group: packer
+        mode: "u=rwx,g=rx,o="
+
+    - name: "Packer already downloaded?"
+      stat:
+        path: "{{ installation_dir }}/{{ installation_archive }}"
+      register: packer_zip
+
+    - name: "Download Packer"
+      get_url:
+        url: "{{ packer_download_url }}"
+        dest: "{{ installation_dir }}"
+        mode: "u=rw,g=r,o="
+        owner: packer
+        group: packer
+      when: packer_zip.stat.exists == False
+
+    - name: "Packer already installed?"
+      stat:
+        path: "{{ installation_dir }}/packer"
+      register: packer_bin
+
+    - name: "Unzip packer"
+      unarchive:
+        src: "{{ installation_dir }}/{{ installation_archive }}"
+        dest: "{{ installation_dir }}"
+        mode: "u=rwx,g=rx,o="
+        owner: packer
+        group: packer
+      when: packer_bin.stat.exists == False
+
+    # Nota : conflict with libcrack
+    # Cf. https://github.com/cracklib/cracklib/issues/7
+    - name: "Put packer in the PATH in the .bashrc file of its user"
+      lineinfile:
+        path: "/home/packer/.bashrc"
+        line: 'export PATH={{ installation_dir }}:$PATH # ajouté automatiquement par Ansible, ne pas modifier'
+
+    - name: "Oracle VirtualBox installation repositories"
+      yum_repository:
+        name: "virtualbox"
+        description: "Oracle Linux / RHEL / CentOS-$releasever / $basearch - VirtualBox"
+        baseurl: "{{ virtualbox_repo_url }}"
+
+    - name: "Oracle GPG key for yum"
+      rpm_key:
+        state: present
+        key: "{{ virtualbox_gpg_key_url }}"
+
+    - name: "Intall VirtualBox"
+      package:
+        name: VirtualBox-5.2.x86_64
+        state: present
+
+    - name: "Packer user added to the vboxusers group"
+      user:
+        name: packer
+        append: yes
+        groups:
+          - vboxusers
+
+    - name: "Add EPEL repositories for dependencies"
+      package:
+        name: epel-release
+        state: present
+
+    - name: "Add needed tools in order to compile the virtualbox kernel module"
+      package:
+        name:
+          - gcc
+          - dkms
+          - make
+          - kernel-devel
+          - kernel-headers
+          - bzip2
+        state: present
+
+    - name: "Add pykickstart to check KickStart files"
+      package:
+        name: pykickstart
+        state: present
+
+    - name: "Make the validation script executable"
+      file:
+        path: ./validate.sh
+        state: file
+        mode: "u=rwx,g=rx,o="
+        
