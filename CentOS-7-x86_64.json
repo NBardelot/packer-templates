@@ -52,7 +52,7 @@
       "staging_directory": "/root/provisionning",
       "playbook_dir": "provisionning-playbooks",
       "playbook_files": [
-        "provisionning-playbooks/provisionning.yml"
+        "provisionning-playbooks/provision.yml"
       ]
     }
   ]
