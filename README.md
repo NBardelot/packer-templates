@@ -27,10 +27,10 @@ This Git repository quickly explained:
 
 ### (Windows + HyperV) Configuring an internal virtual switch to access the Internet
 
-![Step 1, go the switches management UI][./doc/images/NAT-HyperV/1_manage_switches.png]
-![Step 2, create the internal switch named 'nat'][./doc/images/NAT-HyperV/2_create_nat_internal_switch.png]
-![Step 3, go to the host's network devices management UI][./doc/images/NAT-HyperV/3_manage_network_device.png]
-![Step 4, share one device's Internet connexion with the internal 'nat' switch][./doc/images/NAT-HyperV/4_share_network_via_nat_switch.png]
+![Step 1, go the switches management UI](./doc/images/NAT-HyperV/1_manage_switches.png)
+![Step 2, create the internal switch named 'nat'](./doc/images/NAT-HyperV/2_create_nat_internal_switch.png)
+![Step 3, go to the host's network devices management UI](./doc/images/NAT-HyperV/3_manage_network_device.png)
+![Step 4, share one device's Internet connexion with the internal 'nat' switch](./doc/images/NAT-HyperV/4_share_network_via_nat_switch.png)
 
 ̀### (Windows) 2nd step: Install Git & clone this project
 
