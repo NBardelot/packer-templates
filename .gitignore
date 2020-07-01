@@ -5,7 +5,11 @@ out/
 
 # Packer
 packer.exe
-output-virtualbox-iso/
+
+# Temporary files or links
+./builds/**/provision.yml
+./builds/**/output-virtualbox-iso/
+./builds/**/installer_cache/
 packer_cache/
 *.ova
 *.iso

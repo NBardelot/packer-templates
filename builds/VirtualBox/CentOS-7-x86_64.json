@@ -9,9 +9,9 @@
     "type": "virtualbox-iso",
 
     "guest_os_type": "RedHat_64",
-    "iso_url": "http://ftp.pasteur.fr/mirrors/CentOS/7/isos/x86_64/CentOS-7-x86_64-NetInstall-1810.iso",
-    "iso_checksum": "19d94274ef856c4dfcacb2e7cfe4be73e442a71dd65cc3fb6e46db826040b56e",
-    "iso_checksum_type": "sha256",
+    "iso_url": "http://ftp.pasteur.fr/mirrors/CentOS/7/isos/x86_64/CentOS-7-x86_64-NetInstall-2003.iso",
+    "iso_checksum": "sha256:101bc813d2af9ccf534d112cbe8670e6d900425b297d1a4d2529c5ad5f226372",
+    "iso_target_path": "../../packer_cache/",
 
     "communicator": "ssh",
     "ssh_username": "root",
@@ -30,7 +30,7 @@
     ],
     "boot_wait": "5s",
     "floppy_files": [
-      "anaconda-ks.cfg"
+      "installer_cache/anaconda-ks.cfg"
     ],
 
     "shutdown_command": "echo 'admin' | sudo -S shutdown -P now",

@@ -1,0 +1,6 @@
+---
+# This playbook is launch by Packer to provision the VM
+
+- hosts: 127.0.0.1
+  roles:
+    - first-user

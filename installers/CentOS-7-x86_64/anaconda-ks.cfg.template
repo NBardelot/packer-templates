@@ -17,15 +17,15 @@ cmdline
 skipx
 
 # France
-lang fr_FR.UTF-8
-timezone Europe/Paris
-keyboard --vckeymap=fr --xlayouts=''
+lang ${KS_LANG}
+timezone ${KS_TIMEZONE}
+keyboard --vckeymap=${KS_KEYBOARD_KEYMAP} --xlayouts=''
 
 # Users' passwords hashing
 auth --enableshadow --passalgo=sha512
 
 # Network interface
-network --activate --bootproto=dhcp --device=enp0s3 --noipv6
+network --activate --bootproto=dhcp --device=${NETWORK_DEVICE_NAME} --noipv6
 network --hostname=formation
 
 # Root password (WARNING: this must be changed during provisionning)

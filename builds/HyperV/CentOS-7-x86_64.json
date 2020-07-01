@@ -1,0 +1,62 @@
+
+{
+  "_title_1": " Configuration file to build a basic CentOS 7 VM image ",
+  "_title_2": " Author  : Noël Bardelot                               ",
+
+  "_ssh": "You must use the same user/password that the one configured in anaconda-ks.cfg",
+  "_switch_name_1": "This must be an existing switch with access to the package repository mirror",
+  "_switch_name_2": "You'll have to create on of type 'external' if you want the VM to have access to the Internet",
+  "_switch_vlan_id": "For access to the Internet you'll need to setup your switch so that it is managed, with a VLAN id",
+  "_vlan_id": "Must match the switch_vlan_id",
+
+
+  "builders": [{
+    "type": "hyperv-iso",
+    "switch_name": "packer",
+    "switch_vlan_id": "2",
+    "vlan_id": "2",
+
+    "iso_url": "http://ftp.pasteur.fr/mirrors/CentOS/7/isos/x86_64/CentOS-7-x86_64-NetInstall-2003.iso",
+    "iso_checksum": "sha256:101bc813d2af9ccf534d112cbe8670e6d900425b297d1a4d2529c5ad5f226372",
+    "iso_target_path": "../../packer_cache/",
+
+    "communicator": "ssh",
+    "ssh_username": "root",
+    "ssh_password": "root",
+    "ssh_wait_timeout": "20m",
+
+    "memory": 1024,
+    "cpus": 1,
+    "disk_size": 10240,
+
+    "boot_command": [
+      "<esc>",
+      "<wait>",
+      "linux inst.noninteractive inst.cmdline inst.keymap=fr inst.lang=fr_FR.UTF-8 inst.ks=hd:/dev/fd0:anaconda-ks.cfg",
+      "<enter>"
+    ],
+    "boot_wait": "5s",
+    "floppy_files": [
+      "installer_cache/anaconda-ks.cfg"
+    ],
+
+    "shutdown_command": "echo 'admin' | sudo -S shutdown -P now",
+    "shutdown_timeout": "2m"
+  }],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "yum update -y",
+        "yum install -y ansible"
+      ]
+    },
+    {
+      "type": "ansible-local",
+      "staging_directory": "/root/provisionning",
+      "playbook_dir": "../../provisionning-playbooks",
+      "playbook_file": "provision.yml"
+    }
+  ]
+}

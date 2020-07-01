@@ -9,7 +9,8 @@ This Git repository quickly explained:
     │   .gitignore                                
     │   README.md
     │   anaconda-ks.cfg                              # A Kickstart file to install the CentOS 7 system
-    │   CentOS-7-x86_64.json                         # A Packer file to build the VM image
+    │   HyperV-iso_CentOS-7-x86_64.json              # A Packer file to build the VM image
+    │   VirtualBox-iso_CentOS-7-x86_64.json          # A Packer file to build the VM image    
     │   validate.sh                                  # Check Kickstart & Packer files
     │   LINUX_install-packer-and-virtualbox.yml      # A playbook to install Packer And VirtualBox on CentOS/RHEL     
     ├───(output-virtualbox-iso)                      # The directory that Packer will create where the VM image will be published
@@ -58,8 +59,9 @@ You can then add your own user to the `packer` group created by the playbook :
 # How to build a CentOS 7 VM image?
 
   1. Run `./validate.sh` to check *Kickstart*'s `anaconda-ks.cfg`
-     and *Packer*'s `CentOS-7-x86_64.json`
-  2. Run the build with `packer build CentOS-7-x86_64.json`
+     and *Packer*'s `HyperV-iso_CentOS-7-x86_64.json`
+     _Note:_ you can also provide another JSON file to check as the argument
+  2. Run the build with `packer build HyperV-iso_CentOS-7-x86_64.json`
 
 # See also:
 
