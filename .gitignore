@@ -7,9 +7,10 @@ out/
 packer.exe
 
 # Temporary files or links
-./builds/**/provision.yml
-./builds/**/output-virtualbox-iso/
-./builds/**/installer_cache/
+builds/**/provision.yml
+builds/**/output-virtualbox-iso/
+builds/**/installer_cache/
+builds/**/installer_cache/
 packer_cache/
 *.ova
 *.iso
