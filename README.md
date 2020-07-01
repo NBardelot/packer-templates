@@ -32,7 +32,7 @@ This Git repository quickly explained:
 ![Step 3, go to the host's network devices management UI](./doc/images/NAT-HyperV/3_manage_network_device.png)
 ![Step 4, share one device's Internet connexion with the internal 'nat' switch](./doc/images/NAT-HyperV/4_share_network_via_nat_switch.png)
 
-̀### (Windows) 2nd step: Install Git & clone this project
+### (Windows) 2nd step: Install Git & clone this project
 
 Get Git from the [official website](https://git-scm.com/download/).
 
