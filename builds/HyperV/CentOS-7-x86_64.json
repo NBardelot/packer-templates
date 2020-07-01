@@ -5,16 +5,11 @@
 
   "_ssh": "You must use the same user/password that the one configured in anaconda-ks.cfg",
   "_switch_name_1": "This must be an existing switch with access to the package repository mirror",
-  "_switch_name_2": "You'll have to create on of type 'external' if you want the VM to have access to the Internet",
-  "_switch_vlan_id": "For access to the Internet you'll need to setup your switch so that it is managed, with a VLAN id",
-  "_vlan_id": "Must match the switch_vlan_id",
-
+  "_switch_name_2": "To use NAT, first create a switch named 'nat' of type 'internal', and then go to the network interface that's connected to the Internet and share the connexion",
 
   "builders": [{
     "type": "hyperv-iso",
-    "switch_name": "packer",
-    "switch_vlan_id": "2",
-    "vlan_id": "2",
+    "switch_name": "nat",
 
     "iso_url": "http://ftp.pasteur.fr/mirrors/CentOS/7/isos/x86_64/CentOS-7-x86_64-NetInstall-2003.iso",
     "iso_checksum": "sha256:101bc813d2af9ccf534d112cbe8670e6d900425b297d1a4d2529c5ad5f226372",
@@ -32,7 +27,7 @@
     "boot_command": [
       "<esc>",
       "<wait>",
-      "linux inst.noninteractive inst.cmdline inst.keymap=fr inst.lang=fr_FR.UTF-8 inst.ks=hd:/dev/fd0:anaconda-ks.cfg",
+      "linux inst.noninteractive inst.cmdline inst.keymap=fr inst.lang=fr_FR.UTF-8 inst.ks=hd:/dev/fd0:anaconda-ks.cfg ksdevice=eth0",
       "<enter>"
     ],
     "boot_wait": "5s",

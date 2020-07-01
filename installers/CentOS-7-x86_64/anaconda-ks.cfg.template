@@ -25,8 +25,7 @@ keyboard --vckeymap=${KS_KEYBOARD_KEYMAP} --xlayouts=''
 auth --enableshadow --passalgo=sha512
 
 # Network interface
-network --activate --bootproto=dhcp --device=${NETWORK_DEVICE_NAME} --noipv6
-network --hostname=formation
+network --activate --bootproto=dhcp --device=${NETWORK_DEVICE_NAME} --noipv6 --hostname=builtbypacker
 
 # Root password (WARNING: this must be changed during provisionning)
 rootpw --plaintext root

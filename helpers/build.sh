@@ -2,7 +2,6 @@
 
 set -e
 set -o pipefail
-set -x
 
 usage() {
 	>&2 printf "[INFO] Usage: $0 <build file> <installer kind> [<installer file>]\n"
